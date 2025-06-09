@@ -41,7 +41,6 @@ def prompt_chat_template_chatbot():
 
     session_id = st.text_input("Enter Session ID:", key="sarcastic_session_id")
     if not session_id:
-        st.warning("Please enter a Session ID to start chatting.")
         return
 
     config = {"configurable": {"session_id": session_id}}
