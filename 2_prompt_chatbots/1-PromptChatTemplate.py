@@ -6,6 +6,9 @@ load_dotenv()
 from langchain_groq import ChatGroq
 llm = ChatGroq(model_name="llama3-8b-8192")
 
+from langchain_core.output_parsers import StrOutputParser
+outputparser=StrOutputParser()
+
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
@@ -26,7 +29,7 @@ prompt=ChatPromptTemplate.from_messages(
     ]
 )
 
-chain=prompt|llm
+chain=prompt|llm|outputparser
 
 with_message_history=RunnableWithMessageHistory(chain,get_session_history)
 
@@ -54,4 +57,4 @@ while True:
             break
 
         response=with_message_history.invoke([HumanMessage(content=user_input)], config=config)
-        print(response.content)
+        print(response)
